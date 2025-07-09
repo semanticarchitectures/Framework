@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Plan: Black River Intelligence MVP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page dashboard with a fixed sidebar for navigation. The main content area will display sections corresponding to the report's structure. This design was chosen to provide quick, non-linear access to all parts of the plan, which is more efficient for users who may want to jump between, for example, the Tech Stack and the Implementation Phases. The core interaction will be a visual, clickable timeline for the implementation phases, making the project schedule clear and engaging. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification -> Library/Method. Executive Summary/Principles -> Inform -> Styled Text -> Static -> Best for readability -> HTML/Tailwind. Architecture -> Organize -> 3-column cards -> Hover effects -> Visually separates layers -> HTML/Tailwind. Tech Stack -> Organize -> Grouped lists/tags -> Static -> Scannable format -> HTML/Tailwind. Implementation Phases -> Change/Organize -> Horizontal Bar/Gantt Chart -> Tooltips on hover -> Best way to show project timeline visually -> Chart.js/Canvas. AI Workflow/Security/Next Steps -> Inform -> Styled Lists -> Static -> Clear and concise -> HTML/Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #3f3f46; /* zinc-700 */
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active {
+            border-left-color: #a78bfa; /* violet-400 */
+            background-color: #ede9fe; /* violet-100 */
+            color: #5b21b6; /* violet-700 */
+            font-weight: 600;
+        }
+        .nav-link:hover {
+            background-color: #f3f4f6; /* gray-100 */
+            border-left-color: #d1d5db; /* gray-300 */
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 fixed top-0 left-0 h-full bg-white shadow-md hidden lg:block">
+            <div class="p-6">
+                <h1 class="text-xl font-bold text-violet-700">Black River Intel</h1>
+                <p class="text-sm text-gray-500 mt-1">MVP Plan</p>
+            </div>
+            <nav id="desktop-nav" class="mt-4">
+                <a href="#summary" class="nav-link block py-3 px-6 text-gray-600 font-medium">Executive Summary</a>
+                <a href="#principles" class="nav-link block py-3 px-6 text-gray-600 font-medium">Core Principles</a>
+                <a href="#architecture" class="nav-link block py-3 px-6 text-gray-600 font-medium">Architecture</a>
+                <a href="#tech-stack" class="nav-link block py-3 px-6 text-gray-600 font-medium">Tech Stack</a>
+                <a href="#phases" class="nav-link block py-3 px-6 text-gray-600 font-medium">Implementation Phases</a>
+                <a href="#workflow" class="nav-link block py-3 px-6 text-gray-600 font-medium">AI Development</a>
+                <a href="#security" class="nav-link block py-3 px-6 text-gray-600 font-medium">Security</a>
+                <a href="#next-steps" class="nav-link block py-3 px-6 text-gray-600 font-medium">Next Steps</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-10">
+            <!-- Mobile Header -->
+            <div class="lg:hidden mb-6 p-4 bg-white rounded-lg shadow">
+                 <h1 class="text-xl font-bold text-violet-700">Black River Intel MVP Plan</h1>
+                 <p class="text-sm text-gray-500 mt-1">Navigate by scrolling or using a dropdown (if implemented).</p>
+            </div>
+
+            <!-- Executive Summary Section -->
+            <section id="summary" class="mb-12">
+                <div class="card p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Executive Summary</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        This application visualizes the implementation plan for the Minimum Viable Product (MVP) of Black River Intelligence, a decentralized intelligence platform. The MVP leverages the Brave Browser as the primary user interface, Hedera Hashgraph for the DAO infrastructure, and AI-powered coding tools to accelerate development. This approach prioritizes security, reliability, and rapid development by utilizing existing, proven open-source technologies. Use the sidebar to navigate through the key components of the plan.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Core Principles Section -->
+            <section id="principles" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Core Principles</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-3">🛡️</div>
+                        <h3 class="font-semibold text-lg text-gray-800">Security First</h3>
+                        <p class="text-sm text-gray-500 mt-2">All components and processes designed with security as the paramount concern.</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-3">🌐</div>
+                        <h3 class="font-semibold text-lg text-gray-800">Decentralization</h3>
+                        <p class="text-sm text-gray-500 mt-2">Built on a decentralized foundation for censorship resistance and user control.</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-3">📖</div>
+                        <h3 class="font-semibold text-lg text-gray-800">Open Source</h3>
+                        <p class="text-sm text-gray-500 mt-2">Prioritizing open-source software to foster transparency and collaboration.</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-3">🤖</div>
+                        <h3 class="font-semibold text-lg text-gray-800">AI-Assisted</h3>
+                        <p class="text-sm text-gray-500 mt-2">Employing AI coding tools to streamline development and reduce manual effort.</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <div class="text-4xl mb-3">🎯</div>
+                        <h3 class="font-semibold text-lg text-gray-800">Lean MVP</h3>
+                        <p class="text-sm text-gray-500 mt-2">Focus on core features for early adopters to provide feedback for iteration.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">High-Level Architecture</h2>
+                 <p class="text-md text-gray-600 leading-relaxed mb-6 max-w-4xl">
+                    The platform is designed with a three-layer architecture to separate concerns and ensure scalability. The UI layer handles all user interactions, the DAO layer manages governance and blockchain operations, and the Intelligence layer contains the core application logic. Each layer is designed to be modular and can be updated independently.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-6">
+                        <div class="text-3xl mb-4">💻</div>
+                        <h3 class="font-semibold text-xl text-gray-800">User Interface Layer</h3>
+                        <p class="text-gray-600 mt-2">The Brave Browser serves as the primary human-agent interface. A custom Brave extension will provide users with access to the platform's features.</p>
+                    </div>
+                    <div class="card p-6">
+                        <div class="text-3xl mb-4">🔗</div>
+                        <h3 class="font-semibold text-xl text-gray-800">DAO & Governance Layer</h3>
+                        <p class="text-gray-600 mt-2">Hedera Hashgraph is the underlying DLT. An open-source DAO framework will manage governance, proposals, and voting.</p>
+                    </div>
+                    <div class="card p-6">
+                        <div class="text-3xl mb-4">🧠</div>
+                        <h3 class="font-semibold text-xl text-gray-800">Intelligence & Agent Layer</h3>
+                        <p class="text-gray-600 mt-2">Responsible for the core logic. For the MVP, this is a simplified system, with potential to integrate more advanced AI models later.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack Section -->
+            <section id="tech-stack" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Technology Stack</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-6">
+                        <h3 class="font-semibold text-xl text-gray-800 mb-4">Frontend</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Brave Browser</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">JavaScript</span>
+                            <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">HTML</span>
+                            <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">CSS</span>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-semibold text-xl text-gray-800 mb-4">Backend (DAO)</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Hedera Hashgraph</span>
+                            <span class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">easiDAO / HashioDAO</span>
+                            <span class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Solidity</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Hedera JS SDK</span>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-semibold text-xl text-gray-800 mb-4">Development Tools</h3>
+                         <div class="flex flex-wrap gap-2">
+                            <span class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Augment / Cursor</span>
+                            <span class="bg-gray-800 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Git</span>
+                             <span class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">CI/CD (TBD)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Implementation Phases Section -->
+            <section id="phases" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Implementation Phases</h2>
+                <p class="text-md text-gray-600 leading-relaxed mb-6 max-w-4xl">
+                    The MVP development is broken down into four distinct phases, totaling 8 weeks. This chart provides a high-level visual of the project timeline. Hover over each bar to see key activities associated with that phase. This approach ensures a structured, milestone-driven development process from foundation to launch.
+                </p>
+                <div class="card p-6 md:p-8">
+                    <div class="chart-container">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Development Section -->
+            <section id="workflow" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">AI-Assisted Development Workflow</h2>
+                 <div class="card p-6 md:p-8">
+                     <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-violet-500 font-bold text-lg mr-4">1</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Code Generation</h4>
+                                <p class="text-gray-600">Use Augment or Cursor to generate boilerplate code, smart contracts, and UI components from natural language.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-violet-500 font-bold text-lg mr-4">2</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Code Completion & Refactoring</h4>
+                                <p class="text-gray-600">Leverage AI for intelligent code completion and refactoring to improve quality and reduce dev time.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-violet-500 font-bold text-lg mr-4">3</span>
+                             <div>
+                                <h4 class="font-semibold text-gray-800">Bug Detection & Fixing</h4>
+                                <p class="text-gray-600">Utilize the AI's ability to identify patterns and suggest fixes for bugs in the codebase.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-violet-500 font-bold text-lg mr-4">4</span>
+                             <div>
+                                <h4 class="font-semibold text-gray-800">Documentation</h4>
+                                <p class="text-gray-600">Generate documentation for code and APIs automatically using the AI assistant.</p>
+                            </div>
+                        </li>
+                     </ul>
+                </div>
+            </section>
+
+            <!-- Security Section -->
+             <section id="security" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Security Considerations</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h4 class="font-semibold text-lg text-gray-800">Smart Contract Audits</h4>
+                        <p class="text-gray-600 mt-1">All smart contracts will be audited by a reputable third-party security firm before mainnet deployment.</p>
+                    </div>
+                     <div class="card p-6">
+                        <h4 class="font-semibold text-lg text-gray-800">Brave Browser Security</h4>
+                        <p class="text-gray-600 mt-1">Leverage built-in Brave security features (Shields) to protect users from phishing and malicious attacks.</p>
+                    </div>
+                     <div class="card p-6">
+                        <h4 class="font-semibold text-lg text-gray-800">Secure Wallet Integration</h4>
+                        <p class="text-gray-600 mt-1">The Brave extension will use secure, standard methods for integrating with users' Hedera wallets.</p>
+                    </div>
+                     <div class="card p-6">
+                        <h4 class="font-semibold text-lg text-gray-800">Data Privacy</h4>
+                        <p class="text-gray-600 mt-1">All user data will be handled in a privacy-preserving manner, with a commitment to data minimization.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps Section -->
+            <section id="next-steps" class="mb-12">
+                <div class="card p-6 md:p-8 bg-violet-600 text-white">
+                    <h2 class="text-2xl font-bold mb-4">Next Steps</h2>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Assemble the core development team.</li>
+                        <li>Conduct a detailed evaluation of easiDAO and HashioDAO to select the most suitable framework.</li>
+                        <li>Begin Phase 1 of the implementation plan: Foundation & DAO Setup.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Chart.js Timeline Implementation
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            const timelineData = {
+                labels: [
+                    'Phase 1: Foundation & DAO Setup',
+                    'Phase 2: Brave Extension Development',
+                    'Phase 3: Integration & Testing',
+                    'Phase 4: Deployment & Launch'
+                ],
+                datasets: [{
+                    label: 'Duration (Weeks)',
+                    data: [
+                        [0, 2], // Phase 1: Starts week 0, lasts 2 weeks
+                        [2, 5], // Phase 2: Starts week 2, lasts 3 weeks (ends week 5)
+                        [5, 7], // Phase 3: Starts week 5, lasts 2 weeks (ends week 7)
+                        [7, 8]  // Phase 4: Starts week 7, lasts 1 week (ends week 8)
+                    ],
+                    backgroundColor: [
+                        'rgba(167, 139, 250, 0.6)', // violet-400
+                        'rgba(129, 140, 248, 0.6)', // indigo-400
+                        'rgba(96, 165, 250, 0.6)',  // blue-400
+                        'rgba(52, 211, 153, 0.6)'   // emerald-400
+                    ],
+                    borderColor: [
+                        'rgba(139, 92, 246, 1)', // violet-600
+                        'rgba(99, 102, 241, 1)',  // indigo-600
+                        'rgba(59, 130, 246, 1)',  // blue-600
+                        'rgba(16, 185, 129, 1)'   // emerald-600
+                    ],
+                    borderWidth: 1,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.8,
+                    borderSkipped: false,
+                }]
+            };
+            
+            const phaseDetails = {
+                'Phase 1: Foundation & DAO Setup': ['- Setup Hedera testnet accounts', '- Evaluate & select DAO framework', '- Deploy framework to testnet', '- Define governance structure'],
+                'Phase 2: Brave Extension Development': ['- Design UI/UX for extension', '- Develop core features (wallet, dashboard)', '- Utilize Hedera JS SDK', '- Leverage AI for component dev'],
+                'Phase 3: Integration & Testing': ['- Connect extension to testnet DAO', '- End-to-end feature testing', '- Security audits', '- Gather internal feedback'],
+                'Phase 4: Deployment & Launch': ['- Deploy DAO to mainnet', '- Publish extension to web store', '- Onboard initial users', '- Monitor and gather feedback']
+            };
+
+            const timelineChart = new Chart(ctx, {
+                type: 'bar',
+                data: timelineData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 8,
+                            title: {
+                                display: true,
+                                text: 'Project Timeline (Weeks)',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                autoSkip: false,
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    if (label.length > 25) {
+                                        return label.substring(0, 25) + '...';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1f2937',
+                            titleFont: { size: 16 },
+                            bodyFont: { size: 14 },
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const duration = context.raw[1] - context.raw[0];
+                                    return `${label}: ${duration} Week(s)`;
+                                },
+                                afterBody: function(context) {
+                                    const phaseName = context[0].label;
+                                    return phaseDetails[phaseName] || [];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Sidebar Navigation Active State
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#desktop-nav .nav-link');
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+
