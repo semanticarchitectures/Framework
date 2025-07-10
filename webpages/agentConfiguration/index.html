@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Configuration - Semantic Architectures Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="p-2 bg-blue-100 rounded-lg">
+                    <i data-lucide="brain-circuit" class="w-6 h-6 text-blue-600"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Agent Configuration</h1>
+                    <p class="text-gray-600">Configure your AI agent's capabilities and behavior</p>
+                </div>
+            </div>
+            
+            <!-- Agent Basic Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Agent Name</label>
+                    <input type="text" id="agentName" value="Vermont Destination Expert" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Language Model</label>
+                    <select id="selectedLlm" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                        <option value="gpt-4">GPT-4</option>
+                        <option value="claude-3">Claude 3</option>
+                        <option value="llama-2">Llama 2</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Agent Description</label>
+                <textarea id="agentDescription" rows="3" 
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">An expert agent for recreational and business travelers interested in Vermont.</textarea>
+            </div>
+        </div>
+
+        <!-- Configuration Tabs -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <!-- Tab Navigation -->
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8 px-6">
+                    <button class="tab-button active py-4 px-1 border-b-2 border-transparent font-medium text-sm" data-tab="domain">
+                        <i data-lucide="globe" class="w-4 h-4 inline mr-2"></i>
+                        Domain Knowledge
+                    </button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm" data-tab="capabilities">
+                        <i data-lucide="briefcase" class="w-4 h-4 inline mr-2"></i>
+                        Capabilities
+                    </button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm" data-tab="organization">
+                        <i data-lucide="building" class="w-4 h-4 inline mr-2"></i>
+                        Organization
+                    </button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm" data-tab="missions">
+                        <i data-lucide="zap" class="w-4 h-4 inline mr-2"></i>
+                        Missions
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Domain Knowledge Tab -->
+                <div id="domain-tab" class="tab-content active">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Domain Knowledge Configuration</h3>
+                    <p class="text-gray-600 mb-6">Select the knowledge domains your agent should be expert in:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="domainKnowledge">
+                        <!-- Domain checkboxes will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Capabilities Tab -->
+                <div id="capabilities-tab" class="tab-content">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Agent Capabilities</h3>
+                    <p class="text-gray-600 mb-6">Configure what your agent can do:</p>
+                    
+                    <div class="space-y-4" id="capabilities">
+                        <!-- Capabilities will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Organization Tab -->
+                <div id="organization-tab" class="tab-content">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Organization Structure</h3>
+                    <p class="text-gray-600 mb-6">Define how this agent fits into your organization:</p>
+                    
+                    <div class="space-y-6" id="organization">
+                        <!-- Organization config will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Missions Tab -->
+                <div id="missions-tab" class="tab-content">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Mission Configuration</h3>
+                    <p class="text-gray-600 mb-6">Set up missions and objectives for your agent:</p>
+                    
+                    <div class="space-y-6" id="missions">
+                        <!-- Missions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-6 flex justify-between">
+            <button class="px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
+                Reset to Defaults
+            </button>
+            <div class="space-x-3">
+                <button class="px-4 py-2 text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                    Preview Configuration
+                </button>
+                <button class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                    Deploy Agent
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript -->
+    <script src="agentConfig.js"></script>
+</body>
+</html>
