@@ -1,0 +1,21 @@
+# Hardhat files
+cache/
+artifacts/
+typechain-types/
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Coverage reports
+coverage/
+coverage.json
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
