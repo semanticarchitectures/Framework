@@ -1,0 +1,16 @@
+{
+  "name": "dao-multi-agent-blockchain",
+  "version": "1.0.0",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:local": "hardhat deploy --network hardhat",
+    "deploy:testnet": "hardhat deploy --network hedera_testnet",
+    "node": "hardhat node"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.17.0",
+    "hardhat-deploy": "^0.11.0"
+  }
+}
